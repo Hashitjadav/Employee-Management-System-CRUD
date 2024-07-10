@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Employee List</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <td>Full Name</td>
+                <td>Mobile</td>
+                <td>Position</td>
+                <td>Actions</td>
+                <td>
+                    <a href= "{% url 'employee_insert' %}"   class = "btn btn-outline-success"> Add New </a>
+                    <i class="fas fa-plus" > </i>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employee_list %}
+            <tr>
+                <td>{{ employee.fullname }}</td>
+                <td>{{ employee.mobile }}</td>
+                <td>{{ employee.position.title }}</td>
+                <td>
+                    <a href="{% url 'employee_update' employee.id  %}"class="btn btn-warning">Update</a>
+                    <form action="{% url 'employee_delete' employee.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger my-2">Delete
+                            <i class="far fa-trash-alt fa-lg text-danger float-right" class="btn btn-danger"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
